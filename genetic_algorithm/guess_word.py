@@ -5,6 +5,8 @@
 #  work. If not, see <https://creativecommons.org/licenses/by/4.0/>.
 import array
 import functools
+import random
+import string
 
 from deap import base, creator
 
@@ -32,9 +34,14 @@ def individual_creator() -> array.array:
 
 
 def attribute_generator(the_toolbox: base.Toolbox) -> functools.partial:
-
+    """
+    The attribute generator.
+    It chooses a random character from the string of ASCII characters.
+    """
+    alphabet = string.ascii_letters
     try:
         the_toolbox.attr_bool
     except AttributeError:
-        the_toolbox.register("attr_bool", random.randint, 0, 1)
+        the_toolbox.register("attr_bool", random.choice, alphabet)
     return the_toolbox.attr_bool
+
